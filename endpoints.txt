@@ -1,0 +1,50 @@
+signIn {
+    username,
+    password}
+
+singUp {
+    username, 
+    password,
+    confirmPassword}
+
+listPosts{
+    author : {name, avatar},
+    numberLikes, 
+    image,
+    description}
+
+createPost{
+    authorId,
+    image,
+    descriptiion}
+
+deletePost{
+    idPost
+}
+
+updatePost{
+    id,
+    image,
+    description
+}
+
+listProfile {
+    username,
+    avatar,
+    numberPosts,
+    description, 
+    listPosts: {images}
+}
+
+editProfie {
+    avatar, 
+    username,
+    name, 
+    bio, 
+    email,
+    gender
+}
+
+upload{
+    image
+}
