@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-
+const Users = require('../models/users');
+const models = [Users];
 const databaseConfig = require('../configs/db');
 
 class Database{
@@ -8,7 +9,9 @@ class Database{
     }
 
     init(){
-        this.connections = new Sequelize(databaseConfig);
+        this.connection = new Sequelize(databaseConfig);
+
+        models.map((model) => model.init(this.connection));
     }
 }
 
