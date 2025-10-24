@@ -1,0 +1,7 @@
+{
+    "name": "Meu Projeto Node.js com DB",
+    "dockerComposeFile": "../docker-compose.yml", // Aponta para o arquivo
+    "service": "app", // Vamos definir 'app' no compose
+    "workspaceFolder": "/workspace", // Onde o código vai ficar
+    "shutdownAction": "stopCompose"
+}

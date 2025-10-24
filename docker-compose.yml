@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  # Este é o serviço do seu aplicativo Node.js
+  app:
+    # Use uma imagem padrão do Node (use a versão que seu projeto precisa)
+    image: mcr.microsoft.com/devcontainers/javascript-node:18
+    
+    # Mantém o container rodando para o Codespace se conectar
+    command: sleep infinity 
+    
+    # Monta seu código local dentro do container
+    volumes:
+      - ..:/workspace:cached
+    
+    # Expõe a porta do seu app
+    ports:
+      - "3000:3000"
+
+  # Este é o serviço do banco de dados (o mesmo de antes)
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: instadev
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
