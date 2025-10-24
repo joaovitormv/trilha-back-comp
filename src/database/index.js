@@ -11,3 +11,5 @@ class Database{
         this.connections = new Sequelize(databaseConfig);
     }
 }
+
+module.exports = new Database();

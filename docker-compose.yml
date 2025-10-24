@@ -23,7 +23,7 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: instadev
+      MYSQL_DATABASE: tuiter
     ports:
       - "3308:3306"
     volumes:

@@ -3,5 +3,8 @@
     "dockerComposeFile": "../docker-compose.yml", // Aponta para o arquivo
     "service": "app", // Vamos definir 'app' no compose
     "workspaceFolder": "/workspace", // Onde o código vai ficar
-    "shutdownAction": "stopCompose"
+    "shutdownAction": "stopCompose",
+    "features": {
+      "ghcr.io/devcontainers/features/docker-in-docker:2": {} //Para usar os comandos no terminal
+    }
 }
