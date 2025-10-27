@@ -1,6 +1,10 @@
 const Sequelize = require('sequelize');
 const Users = require('../models/users');
-const models = [Users];
+const Posts = require('../models/posts');
+const Likes = require('../models/likes');
+
+const models = [Users, Posts, Likes];
+
 const databaseConfig = require('../configs/db');
 
 class Database{
@@ -11,7 +15,12 @@ class Database{
     init(){
         this.connection = new Sequelize(databaseConfig);
 
-        models.map((model) => model.init(this.connection));
+        models.map((model) => model.init(this.connection)).map((model) => {
+            if (model.associate) {
+              model.associate(this.connection.models);
+            }
+            return model;
+          });
     }
 }
 
