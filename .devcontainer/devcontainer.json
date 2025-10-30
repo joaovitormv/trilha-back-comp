@@ -6,5 +6,12 @@
     "shutdownAction": "stopCompose",
     "features": {
       "ghcr.io/devcontainers/features/docker-in-docker:2": {} //Para usar os comandos no terminal
+    },
+
+    "portsAttributes": {
+      "3000": {
+        "label": "App (Public)",
+        "visibility": "public"
+      }
     }
 }
