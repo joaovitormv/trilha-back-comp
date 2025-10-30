@@ -1,17 +1,16 @@
 const {Router} = require('express');
 const routes = new Router();
-const UserModel = require('./models/users');
+const UserController = require('./controllers/userController')
+const schemaValidator = require('./middlewares/schemaValidator')
+const useSchema = require("./schema/createUserSchema.json")
 
 routes.get('/', async (req, res)=>{
     res.send("Tudo ok")
 })
 
-routes.get('/users', async (req, res)=>{
-    const allUsers = await UserModel.findAll();
-    res.send({Users: allUsers})
-})
+routes.post('/user', schemaValidator(useSchema), UserController.create);
 
-routes.get('/health', (req, res) => {
+routes.get('/check', (req, res) => {
     return res.send({message: "Connected with success"})
 })
 
