@@ -1,4 +1,4 @@
-@baseUrl = https://symmetrical-invention-pj7974jr54j37w-3000.app.github.dev
+@baseUrl = http://localhost:3000
 
 GET {{baseUrl}}/check
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36

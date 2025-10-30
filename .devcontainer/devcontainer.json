@@ -24,5 +24,7 @@
           "dbaeumer.vscode-eslint"       // Para ver erros de código (ESLint)
         ]
       }
-    }
+    },
+
+    "postCreateCommand": "sudo chown -R node:node /workspace/node_modules"
 }
