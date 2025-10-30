@@ -1,17 +1,28 @@
 {
     "name": "Meu Projeto Node.js com DB",
-    "dockerComposeFile": "../docker-compose.yml", // Aponta para o arquivo
-    "service": "app", // Vamos definir 'app' no compose
-    "workspaceFolder": "/workspace", // Onde o código vai ficar
+    "dockerComposeFile": "../docker-compose.yml", 
+    "service": "app", 
+    "workspaceFolder": "/workspace", 
     "shutdownAction": "stopCompose",
     "features": {
-      "ghcr.io/devcontainers/features/docker-in-docker:2": {} //Para usar os comandos no terminal
+      "ghcr.io/devcontainers/features/docker-in-docker:2": {} 
     },
 
     "portsAttributes": {
       "3000": {
         "label": "App (Public)",
         "visibility": "public"
+      }
+    },
+
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "huachao.rest-client",         // Para seus testes .http
+          "mtxr.sqltools",             // O explorador de banco
+          "mtxr.sqltools-driver-mysql",  // O driver do MySQL
+          "dbaeumer.vscode-eslint"       // Para ver erros de código (ESLint)
+        ]
       }
     }
 }

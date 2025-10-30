@@ -1,0 +1,14 @@
+services:
+  app:
+    volumes:
+    - /root/.codespaces/shared:/workspaces/.codespaces/shared:rw
+    - /var/lib/docker/codespacemount/.persistedshare:/workspaces/.codespaces/.persistedshare:rw
+    - /.codespaces/agent/mount:/.codespaces/bin:rw
+    - /mnt/containerTmp:/tmp:rw
+    - /var/lib/docker/codespacemount/workspace:/workspaces:rw
+    labels:
+      Type: codespaces
+      ContainerVersion: '13'
+    environment:
+    - CODESPACES=true
+...

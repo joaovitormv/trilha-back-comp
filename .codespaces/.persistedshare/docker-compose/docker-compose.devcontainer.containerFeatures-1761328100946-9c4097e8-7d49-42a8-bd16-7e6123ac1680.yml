@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  'app':
+    entrypoint: ["/bin/sh", "-c", "echo Container started\n
+trap \"exit 0\" 15\n
+/usr/local/share/docker-init.sh\n
+exec \"$$@\"\n
+while sleep 1 & wait $$!; do :; done", "-", "docker-entrypoint.sh"]
+    environment:
+      - 'CODESPACES=true'
+      - 'ContainerVersion=13'
+      - 'RepositoryName=trilha-back-comp'
+    privileged: true
+    labels:
+      - 'Type=codespaces'
+    volumes:
+      - dind-var-lib-docker-0hcbhh2c7vldoj773drm1bjldnb89u0rt96sl9nju22d9ou8d14n:/var/lib/docker
+      - /root/.codespaces/shared:/workspaces/.codespaces/shared
+      - /var/lib/docker/codespacemount/.persistedshare:/workspaces/.codespaces/.persistedshare
+      - /.codespaces/agent/mount:/.codespaces/bin
+      - /mnt/containerTmp:/tmp
+      - /.codespaces/agent/mount/cache:/vscode
+volumes:
+  
+  dind-var-lib-docker-0hcbhh2c7vldoj773drm1bjldnb89u0rt96sl9nju22d9ou8d14n:

@@ -1,4 +1,4 @@
-version: '3.8'
+
 services:
   # Este é o serviço do seu aplicativo Node.js
   app:
@@ -10,7 +10,8 @@ services:
     
     # Monta seu código local dentro do container
     volumes:
-      - ..:/workspace:cached
+      - .:/workspace:cached
+      - /workspace/node_modules
     
     # Expõe a porta do seu app
     ports:
