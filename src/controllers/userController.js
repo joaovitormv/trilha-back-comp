@@ -18,7 +18,7 @@ class UserController{
                 name,
                 user_name,
                 email,
-                password_hash: password 
+                password: password 
             });
         
         if(!user){

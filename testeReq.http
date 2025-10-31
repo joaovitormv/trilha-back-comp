@@ -8,8 +8,18 @@ POST {{baseUrl}}/user
 Content-Type: application/json
 
 {
-  "name": "Seu Nome",
-  "user_name": "nome foda",
-  "email": "emailfodademais@unico.com",
-  "password": "senha_em_texto_puro_123"
+  "name": "maria",
+  "user_name": "maria",
+  "email": "maria@unico.com",
+  "password": "123"
+}
+###
+
+POST {{baseUrl}}/auth
+Content-Type: application/json
+
+{
+  "user_name": "maria",
+  "email": "maria@unico.com",
+  "password": "123"
 }

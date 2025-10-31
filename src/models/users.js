@@ -15,6 +15,7 @@ class Users extends Model{
         },
         {
             sequelize,
+            
         }
     )
     this.addHook('beforeSave', async(user) => {
@@ -29,6 +30,10 @@ class Users extends Model{
     static associate(models) {
         this.hasMany(models.Posts, { foreignKey: 'author_id', as: 'posts' });
         this.hasMany(models.Likes, { foreignKey: 'user_id', as: 'likes' });
+    }
+
+    checkPassword(password){
+        return bcrypt.compare(password, this.password_hash);
     }
 }
 
