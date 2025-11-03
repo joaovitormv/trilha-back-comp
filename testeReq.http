@@ -9,8 +9,8 @@ Content-Type: application/json
 
 {
   "name": "maria",
-  "user_name": "maria",
-  "email": "maria@unico.com",
+  "user_name": "jonas",
+  "email": "jonas@unico.com",
   "password": "123"
 }
 ###
@@ -19,7 +19,7 @@ POST {{baseUrl}}/auth
 Content-Type: application/json
 
 {
-  "user_name": "maria",
-  "email": "maria@unico.com",
+  "user_name": "jonas",
+  "email": "jonas@unico.com",
   "password": "123"
 }
