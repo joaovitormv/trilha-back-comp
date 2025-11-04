@@ -3,6 +3,7 @@ const Users = require('../models/users');
 const {encrypt} = require('../utils/crypt')
 
 class AuthController{
+
     async auth(req, res){
         const {email, user_name, password} = req.body;
 
@@ -27,16 +28,16 @@ class AuthController{
 
     const {id, user_name: userName } = user;
 
-    const {iv, content} = encrypt(id);
-    const newId = `${iv}:${content}`;
+    const encryptedPayload = encrypt(id);
 
     
 
-    const token = jwt.sign({newId}, process.env.HASH_BCRYPT, {
-        expiresIn: '7d'
-    })
-
-    return res.status(200).json({user: {id, user_name: userName}, token: token});
+    const token = jwt.sign(
+            { encryptedData: encryptedPayload }, 
+            process.env.HASH_BCRYPT, 
+            { expiresIn: '7d' }
+        );
+        return res.status(200).json({user: {id, user_name: userName}, token: token});
     }
 }
 

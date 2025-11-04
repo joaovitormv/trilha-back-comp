@@ -1,3 +1,5 @@
+#Eu sei que o correto é colocar o .env aqui. Mas eu deixei sem, para facilitar a inicialização/teste do projeto.
+
 /node_modules
 
 yarn.lock

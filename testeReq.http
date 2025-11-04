@@ -23,3 +23,12 @@ Content-Type: application/json
   "email": "jonas@unico.com",
   "password": "123"
 }
+
+###
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbmNyeXB0ZWREYXRhIjp7Iml2IjoiYjcxZjIxYjIyYTEyNzdhZDIwOGZiNjI1Zjg0YTk4MGIiLCJjb250ZW50IjoiMWEifSwiaWF0IjoxNzYyMjkwOTIwLCJleHAiOjE3NjI4OTU3MjB9.7BTxlzV5UslSKhjehbS-tqm87kavemx5vTPlkhZwf9k
+
+
+###
+GET {{baseUrl}}/check
+Authorization: Bearer {{authToken}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36

@@ -5,6 +5,7 @@ const schemaValidator = require('./middlewares/schemaValidator')
 const useSchema = require("./schema/createUserSchema.json")
 const authSchema = require('./schema/authSchema.json')
 const AuthController = require('./controllers/authController');
+const AuthMiddleware = require('./middlewares/auth');
 
 
 routes.get('/', async (req, res)=>{
@@ -14,6 +15,8 @@ routes.get('/', async (req, res)=>{
 routes.post('/user', schemaValidator(useSchema), UserController.create);
 
 routes.post('/auth', schemaValidator(authSchema), AuthController.auth);
+
+routes.use(AuthMiddleware);
 
 routes.get('/check', (req, res) => {
     return res.send({message: "Connected with success"})
