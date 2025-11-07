@@ -16,6 +16,8 @@ routes.post('/user', schemaValidator(useSchema), UserController.create);
 
 routes.post('/auth', schemaValidator(authSchema), AuthController.auth);
 
+routes.put('/user', AuthMiddleware, UserController.update);
+
 routes.use(AuthMiddleware);
 
 routes.get('/check', (req, res) => {

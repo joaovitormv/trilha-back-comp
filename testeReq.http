@@ -24,11 +24,23 @@ Content-Type: application/json
   "password": "123"
 }
 
+
+
 ###
-@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbmNyeXB0ZWREYXRhIjp7Iml2IjoiYjcxZjIxYjIyYTEyNzdhZDIwOGZiNjI1Zjg0YTk4MGIiLCJjb250ZW50IjoiMWEifSwiaWF0IjoxNzYyMjkwOTIwLCJleHAiOjE3NjI4OTU3MjB9.7BTxlzV5UslSKhjehbS-tqm87kavemx5vTPlkhZwf9k
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbmNyeXB0ZWREYXRhIjp7Iml2IjoiZDJmMzRmZDA2NDU0MzdlYWI4MTc0Y2MwNTQzMTQzMzciLCJjb250ZW50IjoiNjcifSwiaWF0IjoxNzYyNTQzOTIxLCJleHAiOjE3NjMxNDg3MjF9.z3FmpNr4orZvRaRce5esyj0n_Gn-IzQh1yL-OV_pRSM
 
 
 ###
 GET {{baseUrl}}/check
 Authorization: Bearer {{authToken}}
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+
+###
+PUT {{baseUrl}}/user
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "Jonas (Editado)",
+  "bio": "Esta é minha nova biografia."
+}
