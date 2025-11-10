@@ -70,3 +70,9 @@ Content-Type: application/json
   "type": "RETWEET",
   "original_post_id": 1
 }
+
+###
+GET {{baseUrl}}/posts
+
+###
+GET {{baseUrl}}/posts/1

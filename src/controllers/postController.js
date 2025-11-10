@@ -1,4 +1,5 @@
 const Posts = require('../models/posts.js');
+const Users = require('../models/users');
 
 class PostController{
     async create(req, res){
@@ -24,8 +25,66 @@ class PostController{
 
             return res.status(201).json(post);
         } catch (error) {
+            console.error("FALHA NO CREATE USER", error.message); 
             return res.status(500).json({message: "Failed to create post"})
         }
+    }
+
+    async index(req, res){
+        const posts = Posts.findAll({
+            order: [['created_at', 'DESC']],
+            include: [
+                {
+                    model: Users,
+                    as: 'author', 
+                    attributes: ['id', 'name', 'user_name', 'avatar']
+                },
+                {
+                    model: Posts,
+                    as: 'original_post', 
+                    include: {
+                        model: Users,
+                        as: 'author',
+                        attributes: ['id', 'name', 'user_name']
+                    }
+                }
+            ]
+        });
+
+        if (!posts) {
+            return res.status(404).json({ message: 'No posts found' });
+        }
+    }
+
+    async show(req, res){
+        const { id } = req.params;
+        const post = await Posts.findOne({
+            where: { id: id },
+            
+            
+            include: [
+                {
+                    model: Users,
+                    as: 'author',
+                    attributes: ['id', 'name', 'user_name', 'avatar']
+                },
+                {
+                    model: Posts,
+                    as: 'original_post',
+                    include: {
+                        model: Users,
+                        as: 'author',
+                        attributes: ['id', 'name', 'user_name']
+                    }
+                }
+            ]
+        });
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        return res.status(200).json(post);
     }
 }
 

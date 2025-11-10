@@ -26,11 +26,6 @@ class Posts extends Model {
             foreignKey: 'original_post_id', 
             as: 'original_post' 
         });
-
-        this.hasMany(models.Posts, {
-            foreignKey: 'original_post_id',
-            as: 'retweets'
-        });
     }
 }
 

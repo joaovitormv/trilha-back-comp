@@ -25,5 +25,7 @@ routes.get('/user-profile/:id', UserController.userProfile);
 //fazer a rota de upload de arquivo
 
 routes.post('/posts', AuthMiddleware, PostController.create);
+routes.get('/posts', PostController.index);
+routes.get('/posts/:id', PostController.show);
 
 module.exports = routes;
