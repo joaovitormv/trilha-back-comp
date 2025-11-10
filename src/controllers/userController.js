@@ -31,7 +31,7 @@ class UserController{
     }
 
     async update(req, res){
-        const {name, avatar, bio, old_password, new_password, confirm_new_password} = req.body;
+        const {old_password, new_password, confirm_new_password} = req.body;
 
         const user = await Users.findOne({
             where:{
@@ -60,18 +60,45 @@ class UserController{
             user.password = new_password;
         }
 
-        await Users.update({
-            name: name || user.name,
-            avatar: avatar || user.avatar,
-            bio: bio || user.bio,
-        },
-        {
-            where:{
-                id: user.id,
-            }
-        });
+        
         await user.save();
         return res.status(200).json({message: 'User updated'});
+    }
+
+    async delete(req, res){
+        const userToDelete = await Users.findOne({
+            where:{
+                id: req.userId
+            },
+        });
+
+        if(!userToDelete){
+            return res.status(400).json({message: "User does not exists"});
+        }
+
+        await Users.destroy({
+            where:{
+                id: req.userId,
+            },
+        });
+
+        return res.status(200).json({message: "User deleted"});
+    }
+
+    async userProfile(req, res){
+        const {id: userId} = req.params; 
+        const user = await Users.findOne({
+            where:{
+                id: userId
+            },
+        })
+
+        if(!user){
+            return res.status(400).json({message: "User does not exists"});
+        }
+
+        const {id, name, user_name, email, avatar, bio} = user;
+        return res.status(200).json({ user: {id, name, user_name, email, avatar, bio}});
     }
 }
 
