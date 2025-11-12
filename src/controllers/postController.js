@@ -1,5 +1,6 @@
 const Posts = require('../models/posts.js');
 const Users = require('../models/users');
+const { Sequelize } = require('sequelize');
 
 class PostController{
     async create(req, res){
@@ -33,6 +34,16 @@ class PostController{
     async index(req, res){
         const posts = await Posts.findAll({
             order: [['created_at', 'DESC']],
+
+            attributes: {
+                include: [
+                    [
+                        Sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.post_id = Posts.id)'),
+                        'likes_count'
+                    ]
+                ]
+            },
+
             include: [
                 {
                     model: Users,
@@ -63,7 +74,14 @@ class PostController{
         const post = await Posts.findOne({
             where: { id: id },
             
-            
+            attributes: {
+                include: [
+                    [
+                        Sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.post_id = Posts.id)'),
+                        'likes_count' //Mostra a qtd de likes do post
+                    ]
+                ]
+            },
             include: [
                 {
                     model: Users,
@@ -89,6 +107,32 @@ class PostController{
         return res.status(200).json(post);
     }
 
+    async update(req, res){
+        const user_id = req.userId;
+
+        const {id} = req.params;
+
+        const {description} = req.body;
+
+        const post = await Posts.findOne({
+            where: {id: id}
+        });
+
+        if(!post){
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        if (post.author_id !== user_id) {
+            return res.status(403).json({ message: 'Forbidden: You are not the author of this post' });
+        }
+
+        post.description = description; //No twitter, só é possível editar a descrição
+
+        await post.save();
+
+        return res.status(200).json(post);
+    }
+
     async delete(req, res){
         const user_id = req.userId;
 
@@ -110,6 +154,23 @@ class PostController{
 
         return res.status(200).json({ message: 'Post deleted' });
 
+    }
+
+    async adminDelete(req, res) {
+        const { id } = req.params;
+
+        const post = await Posts.findOne({
+            where: { id: id }
+        });
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        // Não há verificação de autoria. O admin pode deletar
+        await post.destroy();
+
+        return res.status(200).json({ message: 'Post deleted by admin' });
     }
 }
 

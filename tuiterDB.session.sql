@@ -1,1 +1,3 @@
-select * from posts
+ 
+
+SELECT * from users;

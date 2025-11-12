@@ -11,7 +11,8 @@ class Users extends Model{
             avatar: Sequelize.STRING,            
             bio: Sequelize.STRING,
             password: Sequelize.VIRTUAL,          //este campo nao existe na tabela; mas é necessario para fazer o hash na hora de salvar o user no banco  
-            password_hash: Sequelize.STRING,       
+            password_hash: Sequelize.STRING,
+            is_admin: Sequelize.BOOLEAN     
         },
         {
             sequelize,

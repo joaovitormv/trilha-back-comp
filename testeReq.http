@@ -1,38 +1,30 @@
 @baseUrl = http://localhost:3000
 
-@authToken =
+@authToken =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbmNyeXB0ZWREYXRhIjp7Iml2IjoiNTI0ZGIxNWFiMTZlMTlkOTFhY2FhNWNjMTUxNjU2MjYiLCJjb250ZW50IjoiY2IifSwiaWF0IjoxNzYyOTcyMjU5LCJleHAiOjE3NjM1NzcwNTl9.gMaXVflDyNo4Q5DKsWhHRoH5GewzKcx9IjYxUU8cM60
 
 ###
 POST {{baseUrl}}/auth
 Content-Type: application/json
 
 {
-  "user_name": "jonas",
-  "email": "jonas@unico.com",
-  "password": "123"
+  "user_name": "musk",
+  "email": "musk@unico.com",
+  "password": "1234"
 }
-
-###
-> {%
-    const token = response.body.token;
-    client.global.set("authToken", token);
-    client.log("Token capturado pelo script: " + token);
-    
-%}
 
 ###
 POST {{baseUrl}}/user
 Content-Type: application/json
 
 {
-  "name": "maria",
-  "user_name": "jonas",
-  "email": "jonas@unico.com",
-  "password": "123"
+  "name": "elonmusk",
+  "user_name": "musk",
+  "email": "musk@unico.com",
+  "password": "1234"
 }
 
 ###
-GET {{baseUrl}}/user-profile/1
+GET {{baseUrl}}/user-profile/7
 
 ###
 PUT {{baseUrl}}/user
@@ -40,15 +32,18 @@ Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
-  "name": "Jonas (Editado2)",
-  "bio": "Esta é minha nova biografia."
+  "name": "Elon Musk",
+  "bio": "esse aqui é adm"
 }
 
 ###
 DELETE {{baseUrl}}/user
 Authorization: Bearer {{authToken}}
 
-### 
+
+
+
+###
 POST {{baseUrl}}/posts
 Authorization: Bearer {{authToken}}
 Content-Type: application/json
@@ -71,8 +66,33 @@ Content-Type: application/json
 GET {{baseUrl}}/posts
 
 ###
-GET {{baseUrl}}/posts/1
+GET {{baseUrl}}/posts/7
 
 ###
-DELETE {{baseUrl}}/posts/1
+PUT {{baseUrl}}/posts/7
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "description": "Este é o meu post... editado!"
+}
+
+###
+DELETE {{baseUrl}}/posts/5
+Authorization: Bearer {{authToken}}
+
+
+
+
+
+###
+POST {{baseUrl}}/posts/7/like
+Authorization: Bearer {{authToken}}
+
+###
+DELETE {{baseUrl}}/posts/7/like
+Authorization: Bearer {{authToken}}
+
+###
+DELETE {{baseUrl}}/admin/posts/7
 Authorization: Bearer {{authToken}}
