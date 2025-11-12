@@ -1,9 +1,8 @@
 @baseUrl = http://localhost:3000
 
-GET {{baseUrl}}
+@authToken =
 
 ###
-
 POST {{baseUrl}}/auth
 Content-Type: application/json
 
@@ -12,10 +11,14 @@ Content-Type: application/json
   "email": "jonas@unico.com",
   "password": "123"
 }
+
 ###
-@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbmNyeXB0ZWREYXRhIjp7Iml2IjoiMTM0ZDY2MTRlYWI2NjkxMGRmZTIwYmU1NzZkMjA5MjAiLCJjb250ZW50IjoiZDMifSwiaWF0IjoxNzYyNzkzMjY3LCJleHAiOjE3NjMzOTgwNjd9.MEXIixbX_SIw7xCF8YOERb39WqD8vGvvH7eoJPQdvmE
-
-
+> {%
+    const token = response.body.token;
+    client.global.set("authToken", token);
+    client.log("Token capturado pelo script: " + token);
+    
+%}
 
 ###
 POST {{baseUrl}}/user
@@ -29,8 +32,7 @@ Content-Type: application/json
 }
 
 ###
-GET {{baseUrl}}/user-Profile/1
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3
+GET {{baseUrl}}/user-profile/1
 
 ###
 PUT {{baseUrl}}/user
@@ -38,19 +40,13 @@ Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
-  "name": "Jonas (Editado)",
+  "name": "Jonas (Editado2)",
   "bio": "Esta é minha nova biografia."
 }
 
 ###
 DELETE {{baseUrl}}/user
 Authorization: Bearer {{authToken}}
-
-
-
-
-
-
 
 ### 
 POST {{baseUrl}}/posts
@@ -61,7 +57,7 @@ Content-Type: application/json
   "description": "Este é o meu primeiro tweet!"
 }
 
-### FAZER UM RETWEET 
+###
 POST {{baseUrl}}/posts
 Authorization: Bearer {{authToken}}
 Content-Type: application/json
@@ -76,3 +72,7 @@ GET {{baseUrl}}/posts
 
 ###
 GET {{baseUrl}}/posts/1
+
+###
+DELETE {{baseUrl}}/posts/1
+Authorization: Bearer {{authToken}}

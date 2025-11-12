@@ -27,5 +27,6 @@ routes.get('/user-profile/:id', UserController.userProfile);
 routes.post('/posts', AuthMiddleware, PostController.create);
 routes.get('/posts', PostController.index);
 routes.get('/posts/:id', PostController.show);
+routes.delete('/posts/:id', AuthMiddleware, PostController.delete);
 
 module.exports = routes;

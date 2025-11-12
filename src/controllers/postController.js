@@ -31,7 +31,7 @@ class PostController{
     }
 
     async index(req, res){
-        const posts = Posts.findAll({
+        const posts = await Posts.findAll({
             order: [['created_at', 'DESC']],
             include: [
                 {
@@ -54,6 +54,8 @@ class PostController{
         if (!posts) {
             return res.status(404).json({ message: 'No posts found' });
         }
+
+        return res.status(200).json(posts);
     }
 
     async show(req, res){
@@ -85,6 +87,29 @@ class PostController{
         }
 
         return res.status(200).json(post);
+    }
+
+    async delete(req, res){
+        const user_id = req.userId;
+
+        const { id } = req.params;
+
+        const post = await Posts.findOne({
+            where: { id: id }
+        });
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        if (post.author_id !== user_id) {
+            return res.status(403).json({ message: 'Forbidden: You are not the author of this post' }); //403 É o código para "voce esta logado, mas nao tem permissao"
+        }
+
+        await post.destroy();
+
+        return res.status(200).json({ message: 'Post deleted' });
+
     }
 }
 
