@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:3000
 
-@authToken =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbmNyeXB0ZWREYXRhIjp7Iml2IjoiNTI0ZGIxNWFiMTZlMTlkOTFhY2FhNWNjMTUxNjU2MjYiLCJjb250ZW50IjoiY2IifSwiaWF0IjoxNzYyOTcyMjU5LCJleHAiOjE3NjM1NzcwNTl9.gMaXVflDyNo4Q5DKsWhHRoH5GewzKcx9IjYxUU8cM60
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbmNyeXB0ZWREYXRhIjp7Iml2IjoiNTI0ZGIxNWFiMTZlMTlkOTFhY2FhNWNjMTUxNjU2MjYiLCJjb250ZW50IjoiY2IifSwiaWF0IjoxNzYyOTcyMjU5LCJleHAiOjE3NjM1NzcwNTl9.gMaXVflDyNo4Q5DKsWhHRoH5GewzKcx9IjYxUU8cM60
 
 ###
 POST {{baseUrl}}/auth
@@ -10,6 +10,28 @@ Content-Type: application/json
   "user_name": "musk",
   "email": "musk@unico.com",
   "password": "1234"
+}
+
+### "esqueci a senha"
+POST {{baseUrl}}/forgot-password
+Content-Type: application/json
+
+{
+  "email": "jonas@unico.com"
+}
+
+###
+@tokenSenha = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzYzNTc3ODIxLCJleHAiOjE3NjM1Nzg3MjF9.Y5EL6BHC5Tf7774YF1Hx-xtW53Sv4CYZ4zMZUOpOLAw
+@nova_senha = brasil
+
+###
+PUT {{baseUrl}}/reset-password
+Content-Type: application/json
+
+{
+  "token": "{{tokenSenha}}",
+  "new_password": "{{nova_senha}}",
+  "confirm_new_password": "{{nova_senha}}"
 }
 
 ###

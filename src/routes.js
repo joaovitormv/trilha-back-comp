@@ -8,7 +8,8 @@ const useSchema = require("./schema/createUserSchema.json")
 const authSchema = require('./schema/authSchema.json')
 const AuthController = require('./controllers/authController');
 const AuthMiddleware = require('./middlewares/auth');
-const AdmMiddleware = require('./middlewares/admMiddleware')
+const AdmMiddleware = require('./middlewares/admMiddleware');
+const PasswordController = require('./controllers/passwordController');
 
 
 
@@ -18,6 +19,8 @@ routes.get('/', async (req, res)=>{
 
 
 routes.post('/auth', schemaValidator(authSchema), AuthController.auth);
+routes.post('/forgot-password', PasswordController.create);
+routes.put('/reset-password', PasswordController.update);
 
 routes.post('/user', schemaValidator(useSchema), UserController.create);
 routes.put('/user', AuthMiddleware, UserController.update);
