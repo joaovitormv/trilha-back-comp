@@ -15,7 +15,7 @@ services:
     
     # Expõe a porta do seu app
     ports:
-      - "3000:3000"
+      - "3306:3306"
 
   # Este é o serviço do banco de dados (o mesmo de antes)
   db:

@@ -39,9 +39,9 @@ POST {{baseUrl}}/user
 Content-Type: application/json
 
 {
-  "name": "elonmusk",
-  "user_name": "musk",
-  "email": "musk@unico.com",
+  "name": "joao vitor",
+  "user_name": "joao",
+  "email": "joao@unico.com",
   "password": "1234"
 }
 
@@ -96,7 +96,7 @@ Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
-  "description": "Este é o meu post... editado!"
+  "description": "Este é o meu post editado!"
 }
 
 ###

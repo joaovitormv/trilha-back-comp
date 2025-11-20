@@ -3,7 +3,7 @@ const Users = require('../models/users')
 
 class UserController{
     async create(req, res){
-        const { name, user_name, email, password } = req.body;
+        const { name, user_name, email, password, is_admin, admin_pass } = req.body;
         
         const verifyUser = await Users.findOne({ //sequelize faz um select where no BD
             where: {
@@ -15,11 +15,18 @@ class UserController{
             return res.status(400).json({message: 'Email already exists'})
         }
 
+        let roleAdmin = false;
+
+        if (is_admin === true && admin_pass === "SenhaDevSecreta") { //Para criar um USER ADM, é preciso saber a senha
+            roleAdmin = true;
+        }
+
         const user = await Users.create({
                 name,
                 user_name,
                 email,
-                password: password 
+                password: password,
+                is_admin: roleAdmin
             });
         
         if(!user){
