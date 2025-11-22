@@ -1,6 +1,8 @@
 const {decryptedToken} = require('../utils/token')
 const {decrypt} = require('../utils/crypt')
 
+
+// Intercepta a rota para validar o Token JWT, descriptografar o ID do usuário e anexá-lo à requisição (req.userId)
 const verifyJwt = async (req, res, next) =>{
     const authHeader = req.headers.authorization;
     if(!authHeader){

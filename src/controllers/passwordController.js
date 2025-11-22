@@ -6,6 +6,8 @@ const Mail =require('../configs/mail');
 class PasswordController{
     async create(req, res){
         const {email}= req.body;
+
+        // Busca usuário pelo email para iniciar recuperação
         const user = await Users.findOne({
             where: {email: email}
         })
@@ -13,6 +15,7 @@ class PasswordController{
             return res.status(404).json({message: 'User not found'});
         }
 
+        // Gera token temporário contendo o ID do usuário
         const token = jwt.sign(
             {id : user.id},
             process.env.HASH_BCRYPT,
@@ -21,11 +24,12 @@ class PasswordController{
 
         const resetUrl = `http://localhost:3000/reset-password?token=${token}`;
 
+        // Tenta enviar o e-mail com o link/token de recuperação
         try{
             await Mail.sendMail({
                 from: "Projeto Tuiter <noreply@tuiter.com>",
                 to: `${user.name} <${user.email}>`,
-                subjet: 'Recuperação de Senha',
+                subjet: 'RecuperaÃ§Ã£o de Senha',
                 text: `Copie este token: ${token}. Clique no link para redefinir sua senha: ${resetUrl} (quando houver o frontEnd).`
 
             });
@@ -36,7 +40,7 @@ class PasswordController{
         }
 
         console.log("EMAIL ENVIADO (No Mailtrap)");
-        console.log("Link de Recuperação:", resetUrl);
+        console.log("Link de RecuperaÃ§Ã£o:", resetUrl);
         console.log("Token:", token);
 
         return res.status(200).json({message: "Password reset email sent"});
@@ -45,6 +49,7 @@ class PasswordController{
     async update(req, res){
         const {token, new_password, confirm_new_password} = req.body;
 
+        // Valida se as novas senhas foram fornecidas e se coincidem
         if(!new_password || !confirm_new_password){
             return res.status(400).json({message: 'We need a new_password and confirm_new_password attributes'})
         }
@@ -53,14 +58,16 @@ class PasswordController{
             return res.status(400).json({message: 'Passwords do not match'});
         }
 
+        // Verifica a validade do token e decodifica o payload (ID do usuário)
         let payload;
         try{
-            payload = jwt.verify(token, process.env.HASH_BCRYPT); //se o token for valido, ele vai para o payload
+            payload = jwt.verify(token, process.env.HASH_BCRYPT); 
         }catch(err){
             console.log("failed", err);
             return res.status(401).json({message: "Invalid or expired token"});
         }
 
+        // Busca o usuário e atualiza a senha no banco
         const user = await Users.findOne({
             where: {
                 id: payload.id

@@ -1,5 +1,6 @@
 const Users = require ('../models/users');
 
+// Verifica se o usuário autenticado possui permissão de Administrador (is_admin)
 async function AdmMiddleware(req, res, next){
     const user = await Users.findOne({
         where:{id: req.userId}

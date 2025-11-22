@@ -8,6 +8,7 @@ class PostController{
             const { description, image, type, original_post_id } = req.body;
             const author_id = req.userId;
 
+            // Retweets e Quote Tweets exigem o ID do post original
             if (type === 'RETWEET' || type === 'QUOTE_TWEET') {
                 if (!original_post_id) {
                     return res.status(400).json({ 
@@ -16,10 +17,11 @@ class PostController{
                 }
             }
 
+            // Cria o post definindo 'TWEET' como padrão caso o tipo não seja informado
             const post = await Posts.create({
                 description,        
                 image,              
-                type: type || 'TWEET', // Se 'type' não for enviado, recebe 'TWEET'
+                type: type || 'TWEET', 
                 author_id,          
                 original_post_id    // Será nulo para TWEET
             });
@@ -32,6 +34,7 @@ class PostController{
     }
 
     async index(req, res){
+        // Lista posts, incluindo contagem de likes e dados do autor/post original
         const posts = await Posts.findAll({
             order: [['created_at', 'DESC']],
 
@@ -71,6 +74,8 @@ class PostController{
 
     async show(req, res){
         const { id } = req.params;
+
+        // Busca post específico com contagem de likes e relacionamentos (autor e original)
         const post = await Posts.findOne({
             where: { id: id },
             
@@ -122,6 +127,7 @@ class PostController{
             return res.status(404).json({ message: 'Post not found' });
         }
 
+        // Garante que apenas o autor do post pode editá-lo
         if (post.author_id !== user_id) {
             return res.status(403).json({ message: 'Forbidden: You are not the author of this post' });
         }
@@ -146,6 +152,7 @@ class PostController{
             return res.status(404).json({ message: 'Post not found' });
         }
 
+        // Garante permissão de exclusão apenas para o dono do post
         if (post.author_id !== user_id) {
             return res.status(403).json({ message: 'Forbidden: You are not the author of this post' }); //403 É o código para "voce esta logado, mas nao tem permissao"
         }
@@ -167,7 +174,7 @@ class PostController{
             return res.status(404).json({ message: 'Post not found' });
         }
 
-        // Não há verificação de autoria. O admin pode deletar
+        // Exclusão administrativa: deleta sem verificar a autoria
         await post.destroy();
 
         return res.status(200).json({ message: 'Post deleted by admin' });

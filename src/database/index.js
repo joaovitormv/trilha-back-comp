@@ -7,6 +7,8 @@ const models = [Users, Posts, Likes];
 
 const databaseConfig = require('../configs/db');
 
+//Conecta com o banco de dados
+
 class Database{
     constructor(){
         this.init();

@@ -5,6 +5,7 @@ class UserController{
     async create(req, res){
         const { name, user_name, email, password, is_admin, admin_pass } = req.body;
         
+        // Verifica se o email já está cadastrado no banco
         const verifyUser = await Users.findOne({ //sequelize faz um select where no BD
             where: {
                 email: req.body.email
@@ -17,6 +18,7 @@ class UserController{
 
         let roleAdmin = false;
 
+        
         if (is_admin === true && admin_pass === "SenhaDevSecreta") { //Para criar um USER ADM, é preciso saber a senha
             roleAdmin = true;
         }
@@ -50,7 +52,7 @@ class UserController{
             return res.status(400).json({message: "User not exists"});
         }
 
-
+        // Valida a senha antiga e compara a nova com a confirmação
         if(old_password){
             if(!await user.checkPassword(old_password)){
                 return res.status(401).json({error: "Old password does not match"});
@@ -73,6 +75,7 @@ class UserController{
     }
 
     async delete(req, res){
+        // Verifica e remove o usuário logado 
         const userToDelete = await Users.findOne({
             where:{
                 id: req.userId
@@ -94,6 +97,8 @@ class UserController{
 
     async userProfile(req, res){
         const {id: userId} = req.params; 
+        
+        // Busca perfil público de um usuário específico pelo ID
         const user = await Users.findOne({
             where:{
                 id: userId
